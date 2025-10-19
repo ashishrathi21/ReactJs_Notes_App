@@ -9,7 +9,7 @@ const NotesList = ({ task, deleteNote }) => {
         task.map((elem, idx) => (
           <div
             key={idx}
-            className="w-full sm:w-64 bg-[#E8CBFB] rounded-xl shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex flex-col justify-between p-5 max-h-96 overflow-y-auto"
+            className="w-full sm:w-64 bg-[#E8CBFB] rounded-xl shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex flex-col justify-between p-5 max-h-80 overflow-y-auto md:h-60"
           >
             <h3 className="text-lg font-semibold text-gray-800 break-words">
               {elem.title}

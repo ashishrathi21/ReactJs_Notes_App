@@ -1,31 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LeftContainer from "./components/LeftContainer";
 import RightContainer from "./components/RightContainer";
 import { FiEdit } from "react-icons/fi";
 
 const App = () => {
-  const [task, setTask] = useState([]);
+  // Load initial notes from localStorage
+  const [task, setTask] = useState(() => {
+    const saved = localStorage.getItem("notes");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [showForm, setShowForm] = useState(false);
 
+  // Save to localStorage whenever task changes
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(task));
+  }, [task]);
+
   const addNote = (title, details) => {
-    const copyTask = [...task];
-    copyTask.push({ title, details });
-    setTask(copyTask);
+    setTask(prev => [...prev, { title, details }]);
     setShowForm(false);
   };
 
   const deleteNote = (idx) => {
-    const copyTask = [...task];
-    copyTask.splice(idx, 1);
-    setTask(copyTask);
+    setTask(prev => prev.filter((_, i) => i !== idx));
   };
 
   return (
     <div className="h-screen w-screen bg-[#44444E] flex items-center justify-center relative">
+      {/* Desktop/Tablet Layout */}
       <div className="hidden md:flex h-[97%] w-[95%] flex-row rounded-2xl shadow-2xl overflow-hidden bg-white p-6 gap-6">
         <LeftContainer addNote={addNote} />
         <RightContainer task={task} deleteNote={deleteNote} />
       </div>
+
+      {/* Mobile Layout */}
       <div className="md:hidden h-full w-full bg-white relative">
         {showForm ? (
           <div className="p-4">
@@ -34,7 +43,8 @@ const App = () => {
         ) : (
           <RightContainer task={task} deleteNote={deleteNote} />
         )}
-        
+
+        {/* Floating Pencil Button */}
         {!showForm && (
           <button
             onClick={() => setShowForm(true)}
