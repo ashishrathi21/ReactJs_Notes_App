@@ -1,7 +1,6 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
-const NotesForm = ({addNote}) => {
+const NotesForm = ({ addNote }) => {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
 
@@ -12,6 +11,7 @@ const NotesForm = ({addNote}) => {
     setTitle("");
     setDetails("");
   };
+
   return (
     <form onSubmit={titleHandling} className="w-full flex flex-col gap-4">
       <input
